@@ -22,6 +22,10 @@ router.get('/', function (req, res, next) {
    
   res.render('index');
 });
+router.get('/list', function (req, res, next) {
+   
+  res.render('list');
+});
 
 
 
@@ -53,13 +57,12 @@ router.post('/form', authenticate, function (req, res) {
 
 router.get('/:url', function(req, res, next) {
  ShortUrl.findOne({ shorturl : req.params.url})
-  .exec(function(err,url){
-  	return res.render('list',{data:url})
+  .exec(function(err,data){
+  	console.log(data);
+  	var a = "http://"+data.oldurl;
+  	return res.redirect(a);
   });
 });
  
-
-module.exports = router;
-
 
 module.exports = router;
