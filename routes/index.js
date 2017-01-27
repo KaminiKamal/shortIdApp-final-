@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
- var ShortUrl = require("../models/shortgen"); 
- var shortid = require('shortid');
+var ShortUrl = require("../models/shortgen"); 
+var shortid = require('shortid');
 
 var authenticate = function (req, res, next) {
      var str=req.body.originalurl;
@@ -29,7 +29,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/form', authenticate, function (req, res) {
            var url = req.body.originalurl;
-           console.log(url);
+           //console.log(url);
            var q = shortid.generate();
            //var newid = shortid.generate();
 

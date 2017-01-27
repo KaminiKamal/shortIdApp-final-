@@ -39,7 +39,7 @@ $(document).ready(function() {
         data :  data, 
         //dataType: 'json',  // multiple data sent using ajax
         success: function (result) {
-           alert(result.oldurl);
+           alert("shortid generated");
           var out = result.oldurl;
           var c = result.shorturl;
                 $("#newid").html('<a href="http://'+out+'">'+c+'</a>');
