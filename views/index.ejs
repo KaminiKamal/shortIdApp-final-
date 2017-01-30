@@ -10,7 +10,7 @@
   </head>
   <body>
 
- 
+
   <div class="panel panel-default">
     <div class="panel-heading">
      <h4>Type the full url</h4>
@@ -21,30 +21,33 @@
   </div>
 
 
-    
-    
-    
+
+
+
   <div ></div><html>
 <script>
 $(document).ready(function() {
-    $('#btn').click(function () {
-      var data={
+    $('#btn').click(function (evt) {
+        evt.preventDefault();
+      var data  = {
       	'originalurl' : $("#oldurl").val()
-      	
-                    };
+      };
       console.log(data);
       	$.ajax({
-        type:"POST",
-        url:"/form",
-        data :  data, 
+          type:"POST",
+          url:"/form",
+          data :  data,
         //dataType: 'json',  // multiple data sent using ajax
-        success: function (result) {
-           alert("shortid generated");
-          var out = result.oldurl;
-          var c = result.shorturl;
-                $("#newid").html('<a href="http://'+out+'">'+c+'</a>');
-           //window.location = '/display';
-        }
+          success: function (result) {
+            if(result.error){
+              alert(result.reason);
+            }else{
+              alert("shortid generated");
+              var out = result.oldurl;
+              var c = result.shorturl;
+                  $("#newid").html('<a href="http://'+out+'">'+c+'</a>');
+            }
+         }
         });
     });
 });
