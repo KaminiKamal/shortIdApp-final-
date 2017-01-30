@@ -68,8 +68,18 @@ router.get('/:url', function(req, res, next) {
     if(err || data === null){
       res.send('ERROR');
     }else{
-      var a = "http://"+data.oldurl;
-      return res.redirect(a);
+    //  console.log(data.oldurl);
+
+        var match = data.oldurl.match(/^https:\/\/|http:\/\//);
+        if(match === null){
+            res.redirect('http://'+data.oldurl);
+          }
+         else{
+           return  res.redirect( data.oldurl );
+        }
+
+        res.redirect(data.originalUrl);
+
 
     }
 //  	console.log(data);
