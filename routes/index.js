@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ShortUrl = require("../models/shortgen");
 var shortid = require('shortid');
+var  bodyParser = require('body-parser');
 
 var authenticate = function (req, res, next) {
      var str=req.body.originalurl;
@@ -31,7 +32,21 @@ router.get('/', function (req, res, next) {
 // });
 
 
-
+router.post('/sendsms', bodyParser.json(), (req, res) => {console.log("server", req.body);
+  var client = require('twilio')(keys.sid, keys.token);
+  client.sendMessage({
+    to: '+91'+req.body.recipient,
+    from: '+14024137673',
+    body: req.body.message
+  }, function (err, responseData) {
+    if (!err) {
+      res.json({"From": responseData.from, "Body": req.body, "status": 200});
+    }
+    else{
+      res.json({"error" : "failed to send the OTP"})
+    }
+  });
+});
 
 
 router.post('/form', authenticate, function (req, res) {
