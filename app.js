@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose =require('mongoose');
 var index = require('./routes/index');
 var users = require('./routes/users');
-import bodyParser from 'body-parser';
+//import bodyParser from 'body-parser';
 
 var app = express();
 
