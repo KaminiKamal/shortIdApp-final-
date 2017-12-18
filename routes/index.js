@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ShortUrl = require("../models/shortgen");
 var shortid = require('shortid');
-var keys = require('./twilioKeys');
+var bodyParser = require('body-parser');
 
 var authenticate = function (req, res, next) {
      var str=req.body.originalurl;
@@ -33,7 +33,9 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/sendsms', bodyParser.json(), (req, res) => {console.log("server", req.body);
-  var client = require('twilio')(keys.sid, keys.token);
+var sid = 'AC4d6c5dabeaafe6a8d4ed91b5bacfbb98';
+var token = 'eaeedc1bbf914a5ea6298203706eff4a';
+  var client = require('twilio')(sid, token);
   client.sendMessage({
     to: '+91'+req.body.recipient,
     from: '+14024137673',
