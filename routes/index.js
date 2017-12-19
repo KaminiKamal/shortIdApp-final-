@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ShortUrl = require("../models/shortgen");
 var shortid = require('shortid');
-var bodyParser = require('body-parser');
+var keys = require('./twilioKeys');
 
 var authenticate = function (req, res, next) {
      var str=req.body.originalurl;
@@ -42,7 +42,7 @@ var token = 'eaeedc1bbf914a5ea6298203706eff4a';
     body: req.body.message
   }, function (err, responseData) {
     if (!err) {
-      res.json({"From": responseData.from, "text": req.body, "status": 200});
+      res.json({"From": responseData.from, "Body": req.body, "status": 200});
     }
     else{
       res.json({"error" : "failed to send the OTP"})
