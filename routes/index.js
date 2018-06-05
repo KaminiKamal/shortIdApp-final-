@@ -3,6 +3,8 @@ var router = express.Router();
 var ShortUrl = require("../models/shortgen");
 var shortid = require('shortid');
 var bodyParser =  require('body-parser');
+var MyModel = require("../models/selectedModel");
+
 var authenticate = function (req, res, next) {
      var str=req.body.originalurl;
     var n = str.search (/http|https|localhost|www/);
@@ -29,6 +31,32 @@ router.get('/', function (req, res, next) {
 //
 //   res.render('list');
 // });
+
+router.post('/setModel', function(req, res){
+  console.log("req.body", req.body.model);
+  var newModel = new MyModel(req.body);
+  newModel.save()
+  .then(data => {
+    console.log("data", data);
+    res.json({response: data, status: 200})
+  })
+  .catch(err => {
+    console.log("err", err);
+    res.json({error: err, status: 404})
+  })
+});
+
+router.get('/getModel', function(req, res){
+  MyModel.find({})
+  .then(data => {
+    console.log("data", data, data[data.length-1]);
+    res.json({response: data[data.length-1], status: 200})
+  })
+  .catch( err => {
+    console.log("err", err);
+    res.json({error: err, status: 404})
+  })
+})
 
 
 router.post('/sendsms', bodyParser.json(), (req, res) => {console.log("server", req.body);
